@@ -396,4 +396,5 @@ if __name__ == '__main__':
     print("\n✅ Server starting on http://127.0.0.1:5000")
     print("="*70 + "\n")
     
-    app.run(debug=True, port=5000)
+    # app.run(debug=True, port=5000)
+    app = Flask(__name__)
