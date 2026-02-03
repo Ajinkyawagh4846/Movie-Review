@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FilmReviewer - Movie Sentiment Analysis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header / Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h2>🎬 FilmReviewer</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="movies.html" class="nav-link">Movies</a>
+                <a href="search.html" class="nav-link">Search</a>
+                <a href="recent-searches.html" class="nav-link" id="recentSearchLink">Recent Searches</a>
+            </nav>
+            
+            <div class="auth-buttons" id="authButtons">
+                <!-- Will be populated by JavaScript based on login status -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to <span class="brand-highlight">🎬 FilmReviewer</span></h1>
+            <p class="hero-subtitle">Discover what people really think about your favorite movies</p>
+            
+            <div class="hero-actions">
+                <a href="search.html" class="btn-primary">Search Movies</a>
+                <a href="movies.html" class="btn-secondary">Browse All Movies</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>How FilmReviewer Works</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Search Movies</h3>
+                <p>Search from our collection of 249 popular movies from 2015-2024</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>AI Analysis</h3>
+                <p>Our ML model analyzes thousands of reviews to give you accurate sentiment</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>Get Insights</h3>
+                <p>See percentage breakdowns, sample reviews, and overall verdict instantly</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>249+</h3>
+                <p>Movies Analyzed</p>
+            </div>
+            <div class="stat-item">
+                <h3>6,241+</h3>
+                <p>Reviews Processed</p>
+            </div>
+            <div class="stat-item">
+                <h3>69.66%</h3>
+                <p>Model Accuracy</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to discover great movies?</h2>
+        <p>Join thousands of movie enthusiasts making informed viewing decisions.</p>
+        <a href="register.html" class="btn-cta">Get Started Free</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>🎬 FilmReviewer</h3>
+            <p>AI-powered movie sentiment analysis platform helping you make informed viewing decisions through advanced natural language processing and machine learning.</p>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Overview</h4>
+            <ul>
+                <li><a href="#about">About FilmReviewer</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#features">Key Features</a></li>
+                <li><a href="movies.html">Browse Movies</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Features</h4>
+            <ul>
+                <li>AI Sentiment Analysis</li>
+                <li>249+ Movies Database</li>
+                <li>6,241+ Reviews Analyzed</li>
+                <li>Real-time Predictions</li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <ul>
+                <li>📧 ajinkyawagh2005@gmail.com</li>
+                <li>📱 +91 8856875336</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2026 FilmReviewer. All rights reserved. Developed by Ajinkya Wagh</p>
+    </div>
+</footer>
+
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

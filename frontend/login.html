@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - FilmReviewer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html"><h2>🎬 FilmReviewer</h2></a>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="movies.html" class="nav-link">Movies</a>
+                <a href="search.html" class="nav-link">Search</a>
+                <a href="recent-searches.html" class="nav-link" id="recentSearchLink">Recent Searches</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Form -->
+    <section class="auth-page">
+        <div class="auth-container">
+            <h2>Login to FilmReviewer</h2>
+            <p class="auth-subtitle">Welcome back! Please login to your account.</p>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <div id="loginError" class="error-message hidden"></div>
+                
+                <button type="submit" class="btn-submit">Login</button>
+            </form>
+            
+            <p class="auth-switch">
+                Don't have an account? <a href="register.html">Sign up here</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>🎬 FilmReviewer</h3>
+            <p>AI-powered movie sentiment analysis platform helping you make informed viewing decisions through advanced natural language processing and machine learning.</p>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Overview</h4>
+            <ul>
+                <li><a href="#about">About FilmReviewer</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#features">Key Features</a></li>
+                <li><a href="movies.html">Browse Movies</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Features</h4>
+            <ul>
+                <li>AI Sentiment Analysis</li>
+                <li>249+ Movies Database</li>
+                <li>6,241+ Reviews Analyzed</li>
+                <li>Real-time Predictions</li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <ul>
+                <li>📧 ajinkyawagh2005@gmail.com</li>
+                <li>📱 +91 8856875336</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2026 FilmReviewer. All rights reserved. Developed by Ajinkya Wagh</p>
+    </div>
+</footer>
+
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Searches - FilmReviewer</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .recent-searches-page {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 70vh;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .search-history-list {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .search-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+        
+        .search-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .search-item:last-child {
+            border-bottom: none;
+        }
+        
+        .search-info {
+            flex: 1;
+        }
+        
+        .movie-title-search {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .search-time {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        
+        .view-btn {
+            padding: 10px 25px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .view-btn:hover {
+            background: #ee5a52;
+            transform: translateY(-2px);
+        }
+        
+        .no-history {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+        
+        .no-history-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .login-prompt {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .login-prompt-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html"><h2>🎬 FilmReviewer</h2></a>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="movies.html" class="nav-link">Movies</a>
+                <a href="search.html" class="nav-link">Search</a>
+                <a href="recent-searches.html" class="nav-link active" id="recentSearchLink">Recent Searches</a>
+            </nav>
+            
+            <div class="auth-buttons" id="authButtons"></div>
+        </div>
+    </header>
+
+    <!-- Recent Searches Content -->
+    <div class="recent-searches-page">
+        <div class="page-title">
+            <h1>📜 Your Recent Searches</h1>
+            <p>View and revisit movies you've analyzed</p>
+        </div>
+
+        <!-- Login Required Message -->
+        <div id="loginRequired" class="login-prompt hidden">
+            <div class="login-prompt-icon">🔒</div>
+            <h2>Login Required</h2>
+            <p style="margin: 20px 0;">Please log in to view your search history</p>
+            <a href="login.html" class="btn-cta">Login Now</a>
+        </div>
+
+        <!-- Search History List -->
+        <div id="historyContainer" class="search-history-list hidden">
+            <div id="loadingHistory" class="loading">
+                <div class="spinner"></div>
+                <p>Loading your search history...</p>
+            </div>
+            
+            <div id="historyList"></div>
+            
+            <div id="noHistory" class="no-history hidden">
+                <div class="no-history-icon">🎬</div>
+                <h3>No Search History Yet</h3>
+                <p style="margin: 20px 0;">Start analyzing movies to build your history</p>
+                <a href="search.html" class="btn-cta">Search Movies</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>🎬 FilmReviewer</h3>
+            <p>AI-powered movie sentiment analysis platform helping you make informed viewing decisions through advanced natural language processing and machine learning.</p>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Overview</h4>
+            <ul>
+                <li><a href="#about">About FilmReviewer</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#features">Key Features</a></li>
+                <li><a href="movies.html">Browse Movies</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Features</h4>
+            <ul>
+                <li>AI Sentiment Analysis</li>
+                <li>249+ Movies Database</li>
+                <li>6,241+ Reviews Analyzed</li>
+                <li>Real-time Predictions</li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <ul>
+                <li>📧 ajinkyawagh2005@gmail.com</li>
+                <li>📱 +91 8856875336</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2026 FilmReviewer. All rights reserved. Developed by Ajinkya Wagh</p>
+    </div>
+</footer>
+
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Check login and load history
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                const response = await fetch(`${API_URL}/api/check-session`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                
+                if (!data.logged_in) {
+                    // Show login required
+                    document.getElementById('loginRequired').classList.remove('hidden');
+                } else {
+                    // Load search history
+                    document.getElementById('historyContainer').classList.remove('hidden');
+                    await loadSearchHistory();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loginRequired').classList.remove('hidden');
+            }
+        });
+        
+        async function loadSearchHistory() {
+            try {
+                const response = await fetch(`${API_URL}/api/user/search-history?limit=20`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                
+                document.getElementById('loadingHistory').classList.add('hidden');
+                
+                if (data.success && data.history && data.history.length > 0) {
+                    displayHistory(data.history);
+                } else {
+                    document.getElementById('noHistory').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Error loading history:', error);
+                document.getElementById('loadingHistory').innerHTML = '<p style="color: red;">Failed to load search history</p>';
+            }
+        }
+        
+        function displayHistory(history) {
+            const listContainer = document.getElementById('historyList');
+            
+            listContainer.innerHTML = history.map(item => `
+                <div class="search-item" onclick="viewMovie('${item.movie_id}', '${item.movie_title}')">
+                    <div class="search-info">
+                        <div class="movie-title-search">${item.movie_title}</div>
+                        <div class="search-time">🕒 ${formatDate(item.searched_at)}</div>
+                    </div>
+                    <button class="view-btn" onclick="viewMovie('${item.movie_id}', '${item.movie_title}'); event.stopPropagation();">
+                        View Analysis
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        function viewMovie(movieId, movieTitle) {
+            // Store movie info and redirect to search page
+            sessionStorage.setItem('analyzeMovie', JSON.stringify({ id: movieId, title: movieTitle }));
+            window.location.href = 'search.html';
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+            if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+            if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`;
+            
+            return date.toLocaleDateString();
+        }
+    </script>
+</body>
+</html>

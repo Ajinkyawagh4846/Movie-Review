@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Movies - FilmReviewer</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .search-page-wrapper {
+            min-height: 80vh;
+            padding: 40px 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html"><h2>🎬 FilmReviewer</h2></a>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="movies.html" class="nav-link">Movies</a>
+                <a href="search.html" class="nav-link active">Search</a>
+                <a href="recent-searches.html" class="nav-link" id="recentSearchLink">Recent Searches</a>
+            </nav>
+            
+            <div class="auth-buttons" id="authButtons"></div>
+        </div>
+    </header>
+
+    <div class="search-page-wrapper">
+        <div class="container">
+            <!-- Page Title -->
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="font-size: 2.5em; color: var(--primary-color);">Search & Analyze Movies</h1>
+                <p style="font-size: 1.2em; color: var(--text-light);">Find detailed sentiment analysis for any movie</p>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="movieSearch" 
+                        placeholder="Search for a movie..." 
+                        autocomplete="off"
+                    >
+                    <button id="searchBtn">Search</button>
+                </div>
+                
+                <!-- Search suggestions dropdown -->
+                <div id="suggestions" class="suggestions"></div>
+            </div>
+
+            <!-- Loading spinner -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Analyzing reviews...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results" class="results hidden">
+                <!-- Movie Info -->
+                <div class="movie-info">
+                    <h2 id="movieTitle"></h2>
+                    <div class="movie-details">
+                        <span id="movieYear"></span>
+                        <span id="movieGenre"></span>
+                        <span id="movieRating"></span>
+                    </div>
+                </div>
+
+                <!-- Sentiment Analysis -->
+                <div class="sentiment-analysis">
+                    <h3>Sentiment Analysis</h3>
+                    
+                    <!-- Overall Verdict -->
+                    <div class="verdict-card">
+                        <div class="verdict-badge" id="verdictBadge"></div>
+                        <p id="verdictReason"></p>
+                    </div>
+
+                    <!-- Sentiment Statistics -->
+                    <div class="stats-grid">
+                        <div class="stat-card positive">
+                            <div class="stat-icon">😊</div>
+                            <div class="stat-number" id="positivePercent">0%</div>
+                            <div class="stat-label">Positive</div>
+                            <div class="stat-count" id="positiveCount">0 reviews</div>
+                        </div>
+                        
+                        <div class="stat-card neutral">
+                            <div class="stat-icon">😐</div>
+                            <div class="stat-number" id="neutralPercent">0%</div>
+                            <div class="stat-label">Neutral</div>
+                            <div class="stat-count" id="neutralCount">0 reviews</div>
+                        </div>
+                        
+                        <div class="stat-card negative">
+                            <div class="stat-icon">😞</div>
+                            <div class="stat-number" id="negativePercent">0%</div>
+                            <div class="stat-label">Negative</div>
+                            <div class="stat-count" id="negativeCount">0 reviews</div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bars -->
+                    <div class="progress-section">
+                        <div class="progress-item">
+                            <span class="progress-label">Positive</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill positive" id="positiveBar"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-label">Neutral</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill neutral" id="neutralBar"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-label">Negative</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill negative" id="negativeBar"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Reviews -->
+                    <div class="total-reviews">
+                        <strong>Total Reviews Analyzed:</strong> <span id="totalReviews">0</span>
+                    </div>
+                </div>
+
+                <!-- Sample Reviews -->
+                <div class="sample-reviews">
+                    <div class="review-section positive-reviews">
+                        <h4>👍 Sample Positive Reviews</h4>
+                        <div id="positiveReviews"></div>
+                    </div>
+                    
+                    <div class="review-section negative-reviews">
+                        <h4>👎 Sample Negative Reviews</h4>
+                        <div id="negativeReviews"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="error" class="error hidden"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>🎬 FilmReviewer</h3>
+            <p>AI-powered movie sentiment analysis platform helping you make informed viewing decisions through advanced natural language processing and machine learning.</p>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Overview</h4>
+            <ul>
+                <li><a href="#about">About FilmReviewer</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#features">Key Features</a></li>
+                <li><a href="movies.html">Browse Movies</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Features</h4>
+            <ul>
+                <li>AI Sentiment Analysis</li>
+                <li>249+ Movies Database</li>
+                <li>6,241+ Reviews Analyzed</li>
+                <li>Real-time Predictions</li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <ul>
+                <li>📧 ajinkyawagh2005@gmail.com</li>
+                <li>📱 +91 8856875336</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2026 FilmReviewer. All rights reserved. Developed by Ajinkya Wagh</p>
+    </div>
+</footer>
+
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
