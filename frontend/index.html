@@ -68,7 +68,7 @@
     <section class="stats">
         <div class="stats-grid">
             <div class="stat-item">
-                <h3>249+</h3>
+                <h3>1047+</h3>
                 <p>Movies Analyzed</p>
             </div>
             <div class="stat-item">
@@ -76,7 +76,7 @@
                 <p>Reviews Processed</p>
             </div>
             <div class="stat-item">
-                <h3>69.66%</h3>
+                <h3>75%</h3>
                 <p>Model Accuracy</p>
             </div>
         </div>
@@ -111,7 +111,7 @@
             <h4>Features</h4>
             <ul>
                 <li>AI Sentiment Analysis</li>
-                <li>249+ Movies Database</li>
+                <li>1047+ Movies Database</li>
                 <li>6,241+ Reviews Analyzed</li>
                 <li>Real-time Predictions</li>
             </ul>
@@ -120,6 +120,7 @@
         <div class="footer-section">
             <h4>Contact</h4>
             <ul>
+                <li>Ajinkya Wagh</li>
                 <li>📧 ajinkyawagh2005@gmail.com</li>
                 <li>📱 +91 8856875336</li>
             </ul>
@@ -133,5 +134,22 @@
 
     <script src="config.js"></script>
     <script src="auth.js"></script>
+
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+    🌓
+</button>
+
+<script>
+// Dark mode toggle
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+}
+
+// Load dark mode preference
+if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
+}
+</script>
 </body>
 </html>

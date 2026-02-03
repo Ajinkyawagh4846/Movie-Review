@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, session
+from tmdb_api import tmdb_search_movie, get_trailer  # Updated import changed tmdb_search_movie
 from flask_cors import CORS
 import pandas as pd
 import os
@@ -19,7 +20,13 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 project_dir = os.path.dirname(script_dir)
 data_dir = os.path.join(project_dir, 'data')
 
-movies_df = pd.read_csv(os.path.join(data_dir, 'imdb_list.csv'))
+# Load combined dataset (original + Indian movies)
+try:
+    movies_df = pd.read_csv(os.path.join(data_dir, 'imdb_list_combined.csv'))
+    print(f"✅ Loaded combined dataset: {len(movies_df)} movies")
+except FileNotFoundError:
+    movies_df = pd.read_csv(os.path.join(data_dir, 'imdb_list.csv'))
+    print(f"✅ Loaded original dataset: {len(movies_df)} movies")
 reviews_df = pd.read_csv(os.path.join(data_dir, 'imdb_reviews.csv'))
 
 # Load trained model
@@ -257,12 +264,6 @@ def analyze_movie(movie_id):
     
     movie_info = movie.iloc[0].to_dict()
     
-    # Get all reviews for this movie
-    movie_reviews = reviews_df[reviews_df['imdb_id'] == movie_id]
-    
-    if movie_reviews.empty:
-        return jsonify({'success': False, 'error': 'No reviews found for this movie'}), 404
-    
     # Save to search history if user is logged in
     if 'user_id' in session:
         db.add_search_history(
@@ -270,6 +271,34 @@ def analyze_movie(movie_id):
             movie_id,
             movie_info['title']
         )
+    # Get all reviews for this movie
+    # Get all reviews for this movie
+    movie_reviews = reviews_df[reviews_df['imdb_id'] == movie_id]
+
+    # Check if this movie has reviews
+    if movie_reviews.empty:
+        # Indian movie without reviews - show basic info only
+        return jsonify({
+            'success': True,
+            'no_reviews': True,
+            'movie': {
+                'id': movie_info['id'],
+                'title': movie_info['title'],
+                'rating': float(movie_info['rating']),
+                'genre': movie_info['genre'],
+                'year': int(movie_info['year']),
+                'poster_url': movie_info.get('poster_url', None)
+            },
+            'message': 'This movie is from our extended database. Sentiment analysis is not available, but you can see IMDb rating and details.'
+        })
+    
+    # Save to search history if user is logged in
+    # if 'user_id' in session:
+    #     db.add_search_history(
+    #         session['user_id'],
+    #         movie_id,
+    #         movie_info['title']
+    #     )
     
     # Analyze sentiment for each review
     sentiments = []
@@ -334,6 +363,28 @@ def analyze_movie(movie_id):
             'negative': negative_samples
         }
     })
+
+
+@app.route('/api/movie-media/<movie_id>', methods=['GET'])
+def get_movie_media(movie_id):
+    """Get poster and trailer for a movie"""
+    movie = movies_df[movies_df['id'] == movie_id]
+    if movie.empty:
+        return jsonify({'success': False}), 404
+    
+    title = movie.iloc[0]['title']
+    tmdb_data = tmdb_search_movie(title)  #changed function name from search_movie to tmdb_search_movie
+    
+    if tmdb_data:
+        trailer = get_trailer(tmdb_data['tmdb_id'])
+        return jsonify({
+            'success': True,
+            'poster': tmdb_data['poster'],
+            'backdrop': tmdb_data['backdrop'],
+            'trailer': trailer
+        })
+    
+    return jsonify({'success': False}), 404
 
 
 if __name__ == '__main__':

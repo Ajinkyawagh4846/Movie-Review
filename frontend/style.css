@@ -27,7 +27,8 @@ body {
    NAVBAR / HEADER
 ======================================== */
 .navbar {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background-color: #372d23;
+    /* background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); */
     padding: 15px 0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     position: sticky;
@@ -133,7 +134,8 @@ body {
    HERO SECTION
 ======================================== */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background-color: #7f885e;
+    /* background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); */
     color: white;
     padding: 100px 20px;
     text-align: center;
@@ -211,7 +213,7 @@ body {
 }
 
 .feature-card {
-    background: white;
+    background: rgb(255, 255, 255);
     padding: 40px 30px;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -242,9 +244,10 @@ body {
    STATS SECTION
 ======================================== */
 .stats {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background-color: rgb(156, 171, 152);
+    /* background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); */
     padding: 60px 20px;
-    color: white;
+    color: rgb(48, 44, 44);
 }
 
 .stats-grid {
@@ -924,3 +927,98 @@ body {
     text-align: center;
     border: 2px solid #f5c6cb;
 }
+
+/* Dark Mode */
+/* Dark Mode */
+body.dark-mode {
+    background: #000;  /* Full black background */
+    color: #fff;       /* White text for default */
+}
+
+/* Navbar */
+.dark-mode .navbar {
+    background: #111;  /* Dark navbar */
+}
+
+/* Hero Section */
+.dark-mode .hero {
+    background: #201818; /* Dark hero */
+}
+
+/* Feature cards, movie cards, auth forms, results, search history */
+.dark-mode .feature-card, 
+.dark-mode .movie-card, 
+.dark-mode .auth-container,
+.dark-mode .results,
+.dark-mode .search-history-list
+.dark-mode .stats-item{
+    background: #111;
+    color: #fff; /* Make text white */
+}
+
+/* Section headings */
+.dark-mode h1, 
+.dark-mode h2, 
+.dark-mode h3, 
+.dark-mode h4, 
+.dark-mode h5, 
+.dark-mode h6 {
+    color: #fff; /* Ensures headings like "How FilmReviewer Works" are white */
+}
+
+/* Footer */
+.dark-mode .footer {
+    background: #201818;
+    color: #fff;
+}
+
+/* Inputs and selects */
+.dark-mode input, 
+.dark-mode select, 
+.dark-mode textarea {
+    background: #222;
+    color: #fff;
+    border-color: #444;
+}
+
+/* Stats section */
+body.dark-mode .stats {
+    background: #201818;
+}
+
+body.dark-mode .stat-item h3,
+body.dark-mode .stat-item p {
+    color: #fff;
+}
+
+/* CTA section */
+body.dark-mode .cta-section {
+    background: #000;
+}
+
+body.dark-mode .cta-section h2,
+body.dark-mode .cta-section p {
+    color: #fff;
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: transform 0.3s;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+}
+

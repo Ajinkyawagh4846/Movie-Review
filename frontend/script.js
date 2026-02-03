@@ -152,6 +152,34 @@ async function analyzeMovie(movieId) {
 
 // Display analysis results
 function displayResults(data) {
+    // Check if movie has no reviews
+if (data.no_reviews) {
+    // Show basic info without sentiment
+    document.getElementById('movieTitle').textContent = data.movie.title;
+    document.getElementById('movieYear').textContent = `📅 ${data.movie.year}`;
+    document.getElementById('movieGenre').textContent = `🎭 ${data.movie.genre}`;
+    document.getElementById('movieRating').textContent = `⭐ ${data.movie.rating}/10 (IMDb)`;
+    
+    // Show message instead of sentiment
+    results.innerHTML = `
+        <div class="movie-info">
+            <h2>${data.movie.title}</h2>
+            <div class="movie-details">
+                <span>📅 ${data.movie.year}</span>
+                <span>🎭 ${data.movie.genre}</span>
+                <span>⭐ ${data.movie.rating}/10 (IMDb)</span>
+            </div>
+        </div>
+        <div style="text-align: center; padding: 40px; background: #fff3cd; border-radius: 15px; margin: 20px 0;">
+            <h3 style="color: #856404;">ℹ️ ${data.message}</h3>
+            <p style="margin-top: 15px;">IMDb Rating: <strong>${data.movie.rating}/10</strong></p>
+        </div>
+    `;
+    
+    results.classList.remove('hidden');
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+}
     const { movie, analysis, sample_reviews } = data;
     
     // Movie Info
@@ -166,7 +194,7 @@ function displayResults(data) {
     
     // Color code the verdict
     if (analysis.verdict === 'Good Movie') {
-        verdictBadge.style.color = '#28a745';
+        verdictBadge.style.color = '#ff0000ff';
     } else if (analysis.verdict === 'Bad Movie') {
         verdictBadge.style.color = '#dc3545';
     } else {
@@ -202,6 +230,8 @@ function displayResults(data) {
     
     // Smooth scroll to results
     results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    fetchMovieMedia(data.movie.id);
 }
 
 // Display sample reviews
@@ -233,6 +263,40 @@ function showError(message) {
     setTimeout(() => {
         errorDiv.classList.add('hidden');
     }, 5000);
+}
+
+
+// Fetch movie poster and trailer
+async function fetchMovieMedia(movieId) {
+    try {
+        const response = await fetch(`${API_URL}/api/movie-media/${movieId}`);
+        const data = await response.json();
+        
+        if (data.success && data.poster) {
+            // Add poster to movie info
+            const movieInfo = document.querySelector('.movie-info');
+            const posterHTML = `
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="${data.poster}" alt="Movie Poster" style="max-width: 300px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                </div>
+            `;
+            movieInfo.insertAdjacentHTML('afterbegin', posterHTML);
+            
+            // Add trailer button if available
+            if (data.trailer) {
+                const trailerBtn = `
+                    <div style="text-align: center; margin: 20px 0;">
+                        <a href="${data.trailer}" target="_blank" class="btn-primary" style="text-decoration: none; display: inline-block;">
+                            ▶️ Watch Trailer
+                        </a>
+                    </div>
+                `;
+                movieInfo.insertAdjacentHTML('beforeend', trailerBtn);
+            }
+        }
+    } catch (error) {
+        console.log('Could not load movie media');
+    }
 }
 
 // Initialize on page load
