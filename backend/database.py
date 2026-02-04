@@ -311,13 +311,13 @@ import os
 from datetime import datetime
 
 # Check if running on Render (production)
-if os.environ.get('RENDER'):
+USE_POSTGRES = os.environ.get('RENDER') is not None
+
+if USE_POSTGRES:
     import psycopg2
     from psycopg2.extras import RealDictCursor
-    USE_POSTGRES = True
 else:
     import sqlite3
-    USE_POSTGRES = False
 
 class Database:
     def __init__(self):
@@ -337,8 +337,6 @@ class Database:
     def get_connection(self):
         """Create database connection"""
         if USE_POSTGRES:
-            import psycopg2
-            from psycopg2.extras import RealDictCursor
             conn = psycopg2.connect(self.db_url, cursor_factory=RealDictCursor)
             return conn
         else:
