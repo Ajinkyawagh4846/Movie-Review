@@ -10,6 +10,7 @@ from sentiment_model import SentimentAnalyzer
 from database import Database
 
 app = Flask(__name__)
+CORS(app, origins=["https://movie-reviewer-two.vercel.app"], supports_credentials=True)
 app.config['SECRET_KEY'] = secrets.token_hex(16)  # For session management
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Session expires in 7 days
 
