@@ -7,7 +7,7 @@ import sys
 from datetime import datetime, timedelta
 import secrets
 from sentiment_model import SentimentAnalyzer
-from database import Database
+from supabase_db import SupabaseDB
 
 # app = Flask(__name__)
 # CORS(app, origins=["https://movie-reviewer-two.vercel.app"], supports_credentials=True)
@@ -86,7 +86,7 @@ movies_df = movies_df.fillna({
 movies_df['year'] = movies_df['year'].astype(int)
 movies_df['rating'] = movies_df['rating'].astype(float)
 # Initialize database
-db = Database()
+db = SupabaseDB()
 
 # ========================================
 # AUTHENTICATION ROUTES
