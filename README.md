@@ -16,23 +16,6 @@
 
 ---
 
-## 📋 Table of Contents
-
-- [About The Project](#about-the-project)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Machine Learning Model](#machine-learning-model)
-- [API Documentation](#api-documentation)
-- [Deployment](#deployment)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
-- [Contact](#contact)
-
----
-
 ## 🎯 About The Project
 
 **FilmReviewer** is an intelligent movie sentiment analysis platform that helps users make informed viewing decisions by analyzing thousands of movie reviews using advanced Natural Language Processing (NLP) and Machine Learning techniques.
@@ -51,7 +34,7 @@
 ## ✨ Features
 
 ### Core Features
-- ✅ **AI Sentiment Analysis** - 69.66% accuracy sentiment classification
+- ✅ **AI Sentiment Analysis** - 75% accuracy sentiment classification
 - ✅ **Smart Search** - Autocomplete search with real-time suggestions
 - ✅ **Browse Movies** - Filter by genre, year, rating with advanced sorting
 - ✅ **Detailed Reports** - Percentage breakdowns with sample reviews
@@ -216,7 +199,7 @@ filmreviewer/
 - **Feature Extraction**: TF-IDF (5000 features)
 - **Training Data**: 6,241 movie reviews
 - **Classes**: 3 (Negative, Neutral, Positive)
-- **Accuracy**: 69.66%
+- **Accuracy**: 75%
 
 ### Data Preprocessing
 1. Text cleaning (lowercase, special character removal)
@@ -303,21 +286,6 @@ Content-Type: application/json
 
 ---
 
-## 📸 Screenshots
-
-### Home Page
-![Home](screenshots/home.png)
-
-### Movie Analysis
-![Analysis](screenshots/analysis.png)
-
-### Browse Movies
-![Browse](screenshots/browse.png)
-
-### Dark Mode
-![Dark Mode](screenshots/dark-mode.png)
-
----
 
 ## 🤝 Contributing
 
