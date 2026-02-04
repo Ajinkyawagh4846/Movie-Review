@@ -30,27 +30,26 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 # CORS configuration - MUST be after app initialization
 if os.environ.get('RENDER'):
     # Production - allow Vercel domain
-    CORS(app, 
-         supports_credentials=True,
-         origins=[
-             'https://movie-reviewer-two.vercel.app',  # Your exact Vercel URL
-             'https://movie-reviewer-9nhp.onrender.com'  # Your Render URL
-         ],
-         allow_headers=['Content-Type', 'Authorization'],
-         expose_headers=['Set-Cookie'],
-         methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
-else:
-    # Development - allow localhost
-    CORS(app, 
-         supports_credentials=True,
-         origins=['http://127.0.0.1:5500', 'http://localhost:5500'],
-         allow_headers=['Content-Type'],
-         expose_headers=['Set-Cookie'])
+    # CORS - Allow your Vercel frontend
+    CORS(app,
+        supports_credentials=True,
+        origins=[
+            'https://movie-review-smnz.vercel.app/',  # Your Vercel URL
+            'http://localhost:5500',
+            'http://127.0.0.1:5500'
+        ],
+        allow_headers=['Content-Type', 'Authorization'],
+        expose_headers=['Set-Cookie'],
+        methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
 
+    # Session configuration
+    app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
 # CORS with proper credentials support
 CORS(app, 
      supports_credentials=True,
-     origins=['https://movie-reviewer-two.vercel.app/', 'http://localhost:5500', 'http://127.0.0.1:5500'],
+     origins=['https://movie-review-smnz.vercel.app/', 'http://localhost:5500', 'http://127.0.0.1:5500'],
      allow_headers=['Content-Type'],
      expose_headers=['Set-Cookie'])
 # Load datasets
