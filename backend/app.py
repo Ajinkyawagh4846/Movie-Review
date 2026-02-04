@@ -504,8 +504,8 @@ if __name__ == '__main__':
     print("="*70)
     print(f"Total Movies: {len(movies_df)}")
     print(f"Total Reviews: {len(reviews_df)}")
-    print("\n✅ Server starting on http://127.0.0.1:5000")
+    print("\n✅ Server starting on Render")
     print("="*70 + "\n")
-    
-    app.run(debug=True, port=5000)
-    # app = Flask(__name__)
+
+    port = int(os.environ.get("PORT", 5000))  # Use Render-assigned port
+    app.run(host="0.0.0.0", port=port)
