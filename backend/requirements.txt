@@ -8,4 +8,4 @@ joblib>=1.4.0
 requests
 gunicorn==21.2.0
 psycopg2-binary==2.9.10
-supabase==2.3.4
+supabase==1.0.1
