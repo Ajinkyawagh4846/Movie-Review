@@ -80,8 +80,6 @@
 ![TMDb API](https://img.shields.io/badge/TMDb-Movie%20API-01B4E4)
 ![Fetch API](https://img.shields.io/badge/Fetch-API-green)
 
----
-
 ### 🔹 Deployment & Editors
 ![Render](https://img.shields.io/badge/Render-Backend%20Hosting-purple)
 ![Vercel](https://img.shields.io/badge/Vercel-Frontend%20Hosting-black?logo=vercel)
