@@ -232,6 +232,8 @@ if (data.no_reviews) {
     results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
     fetchMovieMedia(data.movie.id);
+    // Call this in displayResults function
+    loadUserReviews(data.movie.id);
 }
 
 // Display sample reviews
@@ -298,6 +300,77 @@ async function fetchMovieMedia(movieId) {
         console.log('Could not load movie media');
     }
 }
+
+let currentMovieId = null;
+
+// After displaying results, load user reviews
+async function loadUserReviews(movieId) {
+    currentMovieId = movieId;
+    
+    const response = await fetch(`${API_URL}/api/user-reviews/${movieId}`);
+    const data = await response.json();
+    
+    document.getElementById('userReviewsSection').classList.remove('hidden');
+    
+    // Check if logged in
+    const sessionCheck = await fetch(`${API_URL}/api/check-session`, {credentials: 'include'});
+    const session = await sessionCheck.json();
+    
+    if (session.logged_in) {
+        document.getElementById('submitReviewForm').classList.remove('hidden');
+    }
+    
+    if (data.success && data.reviews.length > 0) {
+        displayUserReviews(data.reviews);
+    }
+}
+
+function displayUserReviews(reviews) {
+    const html = reviews.map(r => `
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid var(--primary-color);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <strong>👤 ${r.username}</strong>
+                <span>⭐ ${r.rating}/10</span>
+            </div>
+            <p style="color: #666; line-height: 1.6;">${r.review_text}</p>
+            <small style="color: #999;">${new Date(r.created_at).toLocaleDateString()}</small>
+        </div>
+    `).join('');
+    
+    document.getElementById('userReviewsList').innerHTML = html;
+}
+
+async function submitUserReview() {
+    const rating = document.getElementById('userRating').value;
+    const reviewText = document.getElementById('userReviewText').value;
+    
+    if (!rating || !reviewText) {
+        alert('Please provide both rating and review');
+        return;
+    }
+    
+    const response = await fetch(`${API_URL}/api/submit-review`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({
+            movie_id: currentMovieId,
+            movie_title: document.getElementById('movieTitle').textContent,
+            rating: parseInt(rating),
+            review_text: reviewText
+        })
+    });
+    
+    const data = await response.json();
+    alert(data.message);
+    
+    if (data.success) {
+        document.getElementById('userRating').value = '';
+        document.getElementById('userReviewText').value = '';
+        loadUserReviews(currentMovieId);
+    }
+}
+
 
 // Initialize on page load
 window.addEventListener('DOMContentLoaded', function() {

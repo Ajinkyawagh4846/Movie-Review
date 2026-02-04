@@ -20,6 +20,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 project_dir = os.path.dirname(script_dir)
 data_dir = os.path.join(project_dir, 'data')
 
+
 # Load combined dataset (original + Indian movies)
 try:
     movies_df = pd.read_csv(os.path.join(data_dir, 'imdb_list_combined.csv'))
@@ -37,7 +38,15 @@ try:
 except Exception as e:
     print(f"❌ Error loading model: {e}")
     sys.exit(1)
-
+movies_df = movies_df.fillna({
+    'rating': 5.0,
+    'genre': 'Not Available',
+    'year': 2000,
+    'poster_url': None,
+    'has_reviews': False
+})
+movies_df['year'] = movies_df['year'].astype(int)
+movies_df['rating'] = movies_df['rating'].astype(float)
 # Initialize database
 db = Database()
 
@@ -265,12 +274,16 @@ def analyze_movie(movie_id):
     movie_info = movie.iloc[0].to_dict()
     
     # Save to search history if user is logged in
+    # Save to search history if user is logged in
     if 'user_id' in session:
-        db.add_search_history(
-            session['user_id'],
-            movie_id,
-            movie_info['title']
-        )
+        db.add_search_history(session['user_id'], movie_id, movie_info['title'])
+        print(f"✅ Saved search for user {session['user_id']}")
+    # if 'user_id' in session:
+    #     db.add_search_history(
+    #         session['user_id'],
+    #         movie_id,
+    #         movie_info['title']
+    #     )
     # Get all reviews for this movie
     # Get all reviews for this movie
     movie_reviews = reviews_df[reviews_df['imdb_id'] == movie_id]
@@ -386,6 +399,33 @@ def get_movie_media(movie_id):
     
     return jsonify({'success': False}), 404
 
+@app.route('/api/submit-review', methods=['POST'])
+def submit_review():
+    """Submit user review"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Please login first'}), 401
+    
+    data = request.get_json()
+    movie_id = data.get('movie_id')
+    movie_title = data.get('movie_title')
+    rating = data.get('rating')
+    review_text = data.get('review_text', '').strip()
+    
+    if not all([movie_id, movie_title, rating, review_text]):
+        return jsonify({'success': False, 'message': 'All fields required'}), 400
+    
+    if not (1 <= int(rating) <= 10):
+        return jsonify({'success': False, 'message': 'Rating must be 1-10'}), 400
+    
+    result = db.add_user_review(session['user_id'], movie_id, movie_title, int(rating), review_text)
+    return jsonify(result)
+
+@app.route('/api/user-reviews/<movie_id>', methods=['GET'])
+def get_user_movie_reviews(movie_id):
+    """Get user reviews for a movie"""
+    result = db.get_user_reviews(movie_id)
+    return jsonify(result)
+
 
 if __name__ == '__main__':
     print("\n" + "="*70)
@@ -396,5 +436,5 @@ if __name__ == '__main__':
     print("\n✅ Server starting on http://127.0.0.1:5000")
     print("="*70 + "\n")
     
-    # app.run(debug=True, port=5000)
-    app = Flask(__name__)
+    app.run(debug=True, port=5000)
+    # app = Flask(__name__)

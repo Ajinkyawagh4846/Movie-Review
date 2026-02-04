@@ -9,9 +9,6 @@ venv/
 # Database
 users.db
 
-# Model files (optional if large)
-*.pkl
-
 # OS
 .DS_Store
 Thumbs.db

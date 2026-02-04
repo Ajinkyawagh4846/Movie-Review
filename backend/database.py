@@ -207,7 +207,74 @@ class Database:
         
         except Exception as e:
             return {'success': False, 'message': str(e)}
+        
+    def init_database(self):
+        """Create tables if they don't exist"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        # ... existing tables ...
+        
+        # User reviews table
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS user_reviews (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                movie_id TEXT NOT NULL,
+                movie_title TEXT NOT NULL,
+                rating INTEGER NOT NULL,
+                review_text TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users (id)
+            )
+        ''')
+        
+        conn.commit()
+        conn.close()
 
+    def add_user_review(self, user_id, movie_id, movie_title, rating, review_text):
+        """Add a user review"""
+        try:
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            
+            cursor.execute('''
+                INSERT INTO user_reviews (user_id, movie_id, movie_title, rating, review_text)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (user_id, movie_id, movie_title, rating, review_text))
+            
+            conn.commit()
+            conn.close()
+            
+            return {'success': True, 'message': 'Review submitted successfully'}
+        except Exception as e:
+            return {'success': False, 'message': str(e)}
+
+    def get_user_reviews(self, movie_id):
+        """Get user reviews for a movie"""
+        try:
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            
+            cursor.execute('''
+                SELECT ur.rating, ur.review_text, ur.created_at, u.username
+                FROM user_reviews ur
+                JOIN users u ON ur.user_id = u.id
+                WHERE ur.movie_id = ?
+                ORDER BY ur.created_at DESC
+            ''', (movie_id,))
+            
+            reviews = cursor.fetchall()
+            conn.close()
+            
+            return {
+                'success': True,
+                'reviews': [dict(row) for row in reviews]
+            }
+        except Exception as e:
+            return {'success': False, 'message': str(e)}
+
+    
 
 # Test the database
 if __name__ == "__main__":
