@@ -28,30 +28,49 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 #     app.config['SESSION_COOKIE_SECURE'] = False
 #     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 # CORS configuration - MUST be after app initialization
+# if os.environ.get('RENDER'):
 if os.environ.get('RENDER'):
-    # Production - allow Vercel domain
-    # CORS - Allow your Vercel frontend
-    CORS(app,
-        supports_credentials=True,
-        origins=[
-            'https://movie-review-smnz.vercel.app/',  # Your Vercel URL
-            'http://localhost:5500',
-            'http://127.0.0.1:5500'
-        ],
-        allow_headers=['Content-Type', 'Authorization'],
-        expose_headers=['Set-Cookie'],
-        methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
-
-    # Session configuration
+    allowed_origins = ['https://movie-review-smnz.vercel.app']
     app.config['SESSION_COOKIE_SAMESITE'] = 'None'
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_COOKIE_HTTPONLY'] = True
-# CORS with proper credentials support
-CORS(app, 
+else:
+    allowed_origins = ['http://localhost:5500', 'http://127.0.0.1:5500']
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+    app.config['SESSION_COOKIE_SECURE'] = False
+    # Production - allow Vercel domain
+    # CORS - Allow your Vercel frontend
+    CORS(app,
      supports_credentials=True,
-     origins=['https://movie-review-smnz.vercel.app/', 'http://localhost:5500', 'http://127.0.0.1:5500'],
-     allow_headers=['Content-Type'],
-     expose_headers=['Set-Cookie'])
+     origins=allowed_origins,
+     allow_headers=['Content-Type', 'Authorization'],
+     expose_headers=['Set-Cookie'],
+     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
+    # CORS(app,
+    #     supports_credentials=True,
+    #     origins=[
+    #         'https://movie-review-smnz.vercel.app',  # Your Vercel URL
+    #         'http://localhost:5500',
+    #         'http://127.0.0.1:5500'
+    #     ],
+    #     allow_headers=['Content-Type', 'Authorization'],
+    #     expose_headers=['Set-Cookie'],
+    #     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
+
+    # # Session configuration
+    # if os.environ.get('RENDER'):
+    #     app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+    #     app.config['SESSION_COOKIE_SECURE'] = True
+    #     app.config['SESSION_COOKIE_HTTPONLY'] = True
+    # else:
+    #     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+    #     app.config['SESSION_COOKIE_SECURE'] = False
+# CORS with proper credentials support
+# CORS(app, 
+#      supports_credentials=True,
+#      origins=['https://movie-review-smnz.vercel.app', 'http://localhost:5500', 'http://127.0.0.1:5500'],
+#      allow_headers=['Content-Type'],
+#      expose_headers=['Set-Cookie'])
 # Load datasets
 script_dir = os.path.dirname(os.path.abspath(__file__))
 project_dir = os.path.dirname(script_dir)
