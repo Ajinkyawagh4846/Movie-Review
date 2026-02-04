@@ -62,30 +62,19 @@
 ![REST API](https://img.shields.io/badge/REST-API-green)
 ![Session Auth](https://img.shields.io/badge/Authentication-Session--Based-orange)
 
----
-
 ### 🔹 Frontend
 ![HTML5](https://img.shields.io/badge/HTML5-Markup-orange?logo=html5)
 ![CSS3](https://img.shields.io/badge/CSS3-Styling-blue?logo=css3)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?logo=javascript)
 ![Responsive Design](https://img.shields.io/badge/Responsive-Mobile--First-green)
 
----
-
-### 🔹 Machine Learning & NLP
+### 🔹 Machine Learning, NLP & DB
 ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-ML-orange?logo=scikitlearn)
 ![NLTK](https://img.shields.io/badge/NLTK-NLP-green)
 ![TF--IDF](https://img.shields.io/badge/TF--IDF-Vectorization-blueviolet)
 ![Naive Bayes](https://img.shields.io/badge/Naive%20Bayes-Classifier-red)
 ![Text Preprocessing](https://img.shields.io/badge/Text-Preprocessing-lightgrey)
-
----
-
-### 🔹 Database
 ![SQLite](https://img.shields.io/badge/SQLite-Local%20DB-blue?logo=sqlite)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Production%20DB-blue?logo=postgresql)
-
----
 
 ### 🔹 APIs & External Services
 ![TMDb API](https://img.shields.io/badge/TMDb-Movie%20API-01B4E4)
@@ -93,25 +82,16 @@
 
 ---
 
-### 🔹 Deployment & DevOps
+### 🔹 Deployment & Editors
 ![Render](https://img.shields.io/badge/Render-Backend%20Hosting-purple)
 ![Vercel](https://img.shields.io/badge/Vercel-Frontend%20Hosting-black?logo=vercel)
 ![Environment Variables](https://img.shields.io/badge/ENV-Variables-yellow)
-
----
-
-### 🔹 Development Tools & Editor
 ![VS Code](https://img.shields.io/badge/VS%20Code-Editor-blue?logo=visualstudiocode)
 ![Git](https://img.shields.io/badge/Git-Version%20Control-orange?logo=git)
 ![GitHub](https://img.shields.io/badge/GitHub-Repository-black?logo=github)
 
 ---
 
-### 🔹 Browser & Testing
-![Chrome](https://img.shields.io/badge/Chrome-Browser-red?logo=googlechrome)
-![DevTools](https://img.shields.io/badge/DevTools-Debugging-green)
-
----
 
 ## 🚀 Getting Started
 
