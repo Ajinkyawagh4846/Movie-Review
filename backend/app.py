@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = secrets.token_hex(16)  # For session management
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Session expires in 7 days
 
-CORS(app, supports_credentials=True, origins=['http://127.0.0.1:5500', 'http://localhost:5500', 'null'])  # Enable CORS with credentials
+CORS(app, supports_credentials=True, origins=['https://movie-reviewer-two.vercel.app','http://127.0.0.1:5500', 'http://localhost:5500', 'null'])  # Enable CORS with credentials
 
 # Load datasets
 script_dir = os.path.dirname(os.path.abspath(__file__))
