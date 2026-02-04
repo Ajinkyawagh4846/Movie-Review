@@ -10,7 +10,7 @@
 
 **Discover what people really think about your favorite movies through advanced AI sentiment analysis**
 
-[Live Demo](movie-reviewer-two.vercel.app) • [Live Backend](https://movie-reviewer-9nhp.onrender.com) • [Report Bug](https://github.com/Ajinkyawagh4846/movie-reviewer) • [Request Feature](https://github.com/Ajinkyawagh4846/movie-reviewer)
+[Live Demo](https://movie-review-smnz.vercel.app/) • [Live Backend](https://movie-review-fqp4.onrender.com) • [Report Bug](https://github.com/Ajinkyawagh4846/movie-reviewer) • [Request Feature](https://github.com/Ajinkyawagh4846/movie-reviewer)
 
 </div>
 
@@ -317,7 +317,7 @@ Contributions are what make the open source community amazing! Any contributions
 - GitHub: https://github.com/Ajinkyawagh4846
 - LinkedIn: https://www.linkedin.com/in/ajinkya-wagh-a201212b8/
 
-**Project Link**: https://github.com/Ajinkyawagh4846/movie-reviewer
+**Project Link**: https://github.com/Ajinkyawagh4846/Movie-Review
 
 ---
 
