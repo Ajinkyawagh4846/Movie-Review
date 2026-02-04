@@ -56,9 +56,21 @@
 
 ## 🛠️ Tech Stack
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=python,flask,html,css,javascript,postgresql,sqlite,github,chrome,vercel" />
-</p>
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
+![Flask](https://img.shields.io/badge/Flask-Framework-black?logo=flask)
+![HTML](https://img.shields.io/badge/HTML5-Markup-orange?logo=html5)
+![CSS](https://img.shields.io/badge/CSS3-Styling-blue?logo=css3)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?logo=javascript)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-ML-orange?logo=scikitlearn)
+![NLTK](https://img.shields.io/badge/NLTK-NLP-green)
+![Pandas](https://img.shields.io/badge/Pandas-Data-purple?logo=pandas)
+![SQLite](https://img.shields.io/badge/SQLite-DB-blue?logo=sqlite)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-DB-blue?logo=postgresql)
+![GitHub](https://img.shields.io/badge/GitHub-VersionControl-black?logo=github)
+![Browser](https://img.shields.io/badge/Browser-Chrome-red?logo=googlechrome)
+![Vercel](https://img.shields.io/badge/Vercel-Frontend-black?logo=vercel)
+![Render](https://img.shields.io/badge/Render-Backend-purple)
+
 
 ---
 
