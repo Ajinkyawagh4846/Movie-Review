@@ -314,10 +314,17 @@ from datetime import datetime
 USE_POSTGRES = os.environ.get('RENDER') is not None
 
 if USE_POSTGRES:
-    import psycopg2
-    from psycopg2.extras import RealDictCursor
+    try:
+        import psycopg2
+        from psycopg2.extras import RealDictCursor
+        print("✅ PostgreSQL driver loaded")
+    except ImportError as e:
+        print(f"❌ Failed to import psycopg2: {e}")
+        print("Make sure psycopg2-binary is in requirements.txt")
+        raise
 else:
     import sqlite3
+    print("✅ SQLite driver loaded")
 
 class Database:
     def __init__(self):
