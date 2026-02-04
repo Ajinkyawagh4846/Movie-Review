@@ -56,30 +56,9 @@
 
 ## 🛠️ Tech Stack
 
-### Backend & Database
-<p align="left">
-  <img src="https://skillicons.dev/icons?i=python,flask,postgresql,sqlite" />
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=python,flask,html,css,javascript,postgresql,sqlite,github,chrome,vercel" />
 </p>
-
-### Data Science & Machine Learning
-<p align="left">
-  <img src="https://skillicons.dev/icons?i=python" />
-  <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" height="40"/>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/NLTK_logo.png" height="40"/>
-  <img src="https://pandas.pydata.org/static/img/pandas_mark.svg" height="40"/>
-</p>
-
-### Frontend
-<p align="left">
-  <img src="https://skillicons.dev/icons?i=html,css,javascript" />
-</p>
-
-### Tools, Browser & Deployment
-<p align="left">
-  <img src="https://skillicons.dev/icons?i=github,chrome,vercel" />
-  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Render_logo.svg" height="40"/>
-</p>
-
 
 ---
 
