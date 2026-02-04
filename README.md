@@ -24,7 +24,7 @@
 
 - 🤖 **AI-Powered Analysis**: Uses ML models trained on 6,241+ real movie reviews
 - 📊 **Comprehensive Insights**: Get detailed sentiment breakdowns (Positive, Neutral, Negative)
-- 🎭 **Large Database**: Browse 249+ movies with full sentiment analysis
+- 🎭 **Large Database**: Browse 249+ movies with full sentiment analysis, and 800+ movies with ratings.
 - 🔐 **User Features**: Account system with search history and personalized recommendations
 - 🌙 **Modern UI**: Beautiful, responsive interface with dark mode support
 - 🚀 **Fast & Reliable**: Cached API responses for instant results
@@ -133,7 +133,7 @@
 
 ### For Users
 
-1. **Browse Movies** - Explore 249+ movies with filters
+1. **Browse Movies** - Explore 1047+ movies with filters
 2. **Search** - Type movie name and get instant suggestions
 3. **Analyze** - Click on any movie to see sentiment analysis
 4. **Create Account** - Sign up to save search history
