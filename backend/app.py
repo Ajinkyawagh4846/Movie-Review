@@ -38,14 +38,15 @@ else:
     allowed_origins = ['http://localhost:5500', 'http://127.0.0.1:5500']
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
     app.config['SESSION_COOKIE_SECURE'] = False
-    # Production - allow Vercel domain
-    # CORS - Allow your Vercel frontend
-    CORS(app,
+
+# ✅ Apply CORS for all environments
+CORS(app,
      supports_credentials=True,
      origins=allowed_origins,
      allow_headers=['Content-Type', 'Authorization'],
      expose_headers=['Set-Cookie'],
      methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
+
     # CORS(app,
     #     supports_credentials=True,
     #     origins=[
