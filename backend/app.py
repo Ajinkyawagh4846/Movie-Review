@@ -9,13 +9,31 @@ import secrets
 from sentiment_model import SentimentAnalyzer
 from database import Database
 
+# app = Flask(__name__)
+# CORS(app, origins=["https://movie-reviewer-two.vercel.app"], supports_credentials=True)
+# app.config['SECRET_KEY'] = secrets.token_hex(16)  # For session management
+# app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Session expires in 7 days
+
+# CORS(app, supports_credentials=True, origins=['https://movie-reviewer-two.vercel.app','http://127.0.0.1:5500', 'http://localhost:5500', 'null'])  # Enable CORS with credentials
 app = Flask(__name__)
-CORS(app, origins=["https://movie-reviewer-two.vercel.app"], supports_credentials=True)
-app.config['SECRET_KEY'] = secrets.token_hex(16)  # For session management
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Session expires in 7 days
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', secrets.token_hex(16))
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 
-CORS(app, supports_credentials=True, origins=['https://movie-reviewer-two.vercel.app','http://127.0.0.1:5500', 'http://localhost:5500', 'null'])  # Enable CORS with credentials
+# Production session settings
+if os.environ.get('RENDER'):
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+else:
+    app.config['SESSION_COOKIE_SECURE'] = False
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
+# CORS with proper credentials support
+CORS(app, 
+     supports_credentials=True,
+     origins=['https://movie-reviewer-two.vercel.app/', 'http://localhost:5500', 'http://127.0.0.1:5500'],
+     allow_headers=['Content-Type'],
+     expose_headers=['Set-Cookie'])
 # Load datasets
 script_dir = os.path.dirname(os.path.abspath(__file__))
 project_dir = os.path.dirname(script_dir)
@@ -400,32 +418,66 @@ def get_movie_media(movie_id):
     
     return jsonify({'success': False}), 404
 
+# @app.route('/api/submit-review', methods=['POST'])
+# def submit_review():
+#     """Submit user review"""
+#     if 'user_id' not in session:
+#         return jsonify({'success': False, 'message': 'Please login first'}), 401
+    
+#     data = request.get_json()
+#     movie_id = data.get('movie_id')
+#     movie_title = data.get('movie_title')
+#     rating = data.get('rating')
+#     review_text = data.get('review_text', '').strip()
+    
+#     if not all([movie_id, movie_title, rating, review_text]):
+#         return jsonify({'success': False, 'message': 'All fields required'}), 400
+    
+#     if not (1 <= int(rating) <= 10):
+#         return jsonify({'success': False, 'message': 'Rating must be 1-10'}), 400
+    
+#     result = db.add_user_review(session['user_id'], movie_id, movie_title, int(rating), review_text)
+#     return jsonify(result)
+
+# @app.route('/api/user-reviews/<movie_id>', methods=['GET'])
+# def get_user_movie_reviews(movie_id):
+#     """Get user reviews for a movie"""
+#     result = db.get_user_reviews(movie_id)
+#     return jsonify(result)
+
 @app.route('/api/submit-review', methods=['POST'])
 def submit_review():
     """Submit user review"""
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Please login first'}), 401
     
-    data = request.get_json()
-    movie_id = data.get('movie_id')
-    movie_title = data.get('movie_title')
-    rating = data.get('rating')
-    review_text = data.get('review_text', '').strip()
-    
-    if not all([movie_id, movie_title, rating, review_text]):
-        return jsonify({'success': False, 'message': 'All fields required'}), 400
-    
-    if not (1 <= int(rating) <= 10):
-        return jsonify({'success': False, 'message': 'Rating must be 1-10'}), 400
-    
-    result = db.add_user_review(session['user_id'], movie_id, movie_title, int(rating), review_text)
-    return jsonify(result)
+    try:
+        data = request.get_json()
+        movie_id = data.get('movie_id')
+        movie_title = data.get('movie_title')
+        rating = data.get('rating')
+        review_text = data.get('review_text', '').strip()
+        
+        if not all([movie_id, movie_title, rating, review_text]):
+            return jsonify({'success': False, 'message': 'All fields required'}), 400
+        
+        if not (1 <= int(rating) <= 10):
+            return jsonify({'success': False, 'message': 'Rating must be 1-10'}), 400
+        
+        result = db.add_user_review(session['user_id'], movie_id, movie_title, int(rating), review_text)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
 
 @app.route('/api/user-reviews/<movie_id>', methods=['GET'])
 def get_user_movie_reviews(movie_id):
     """Get user reviews for a movie"""
-    result = db.get_user_reviews(movie_id)
-    return jsonify(result)
+    try:
+        result = db.get_user_reviews(movie_id)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
 
 
 if __name__ == '__main__':
