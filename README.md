@@ -24,10 +24,11 @@
 
 - 🤖 **AI-Powered Analysis**: Uses ML models trained on 6,241+ real movie reviews
 - 📊 **Comprehensive Insights**: Get detailed sentiment breakdowns (Positive, Neutral, Negative)
-- 🎭 **Large Database**: Browse 249+ movies with full sentiment analysis, and 800+ movies with ratings.
+- 🎭 **Large Database**: Browse 249+ movies with full sentiment analysis, and 1000+ movies with ratings
 - 🔐 **User Features**: Account system with search history and personalized recommendations
 - 🌙 **Modern UI**: Beautiful, responsive interface with dark mode support
 - 🚀 **Fast & Reliable**: Cached API responses for instant results
+- ☁️ **Cloud Database**: Powered by Supabase for scalable data management
 
 ---
 
@@ -48,9 +49,10 @@
 ### Advanced Features
 - 🎯 **Movie Recommendations** - Get similar movie suggestions
 - 📈 **Visual Analytics** - Progress bars and statistical visualizations
-- 💾 **Data Persistence** - SQLite database for user data
+- 💾 **Cloud Data Persistence** - Supabase PostgreSQL database
 - ⚡ **API Caching** - Fast response times with intelligent caching
 - 🔒 **Secure Authentication** - Password hashing with SHA-256
+- 🌐 **Real-time Updates** - Community reviews sync instantly
 
 ---
 
@@ -68,19 +70,24 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?logo=javascript)
 ![Responsive Design](https://img.shields.io/badge/Responsive-Mobile--First-green)
 
-### 🔹 Machine Learning, NLP & DB
+### 🔹 Machine Learning & NLP
 ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-ML-orange?logo=scikitlearn)
 ![NLTK](https://img.shields.io/badge/NLTK-NLP-green)
-![TF--IDF](https://img.shields.io/badge/TF--IDF-Vectorization-blueviolet)
+![TF-IDF](https://img.shields.io/badge/TF--IDF-Vectorization-blueviolet)
 ![Naive Bayes](https://img.shields.io/badge/Naive%20Bayes-Classifier-red)
 ![Text Preprocessing](https://img.shields.io/badge/Text-Preprocessing-lightgrey)
-![SQLite](https://img.shields.io/badge/SQLite-Local%20DB-blue?logo=sqlite)
+
+### 🔹 Database & Cloud
+![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?logo=supabase)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql)
+![SQLite](https://img.shields.io/badge/SQLite-Local%20Dev-003B57?logo=sqlite)
 
 ### 🔹 APIs & External Services
 ![TMDb API](https://img.shields.io/badge/TMDb-Movie%20API-01B4E4)
+![Supabase API](https://img.shields.io/badge/Supabase-REST%20API-3ECF8E)
 ![Fetch API](https://img.shields.io/badge/Fetch-API-green)
 
-### 🔹 Deployment & Editors
+### 🔹 Deployment & Tools
 ![Render](https://img.shields.io/badge/Render-Backend%20Hosting-purple)
 ![Vercel](https://img.shields.io/badge/Vercel-Frontend%20Hosting-black?logo=vercel)
 ![Environment Variables](https://img.shields.io/badge/ENV-Variables-yellow)
@@ -90,7 +97,6 @@
 
 ---
 
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -98,41 +104,89 @@
 - Python 3.11 or higher
 - pip package manager
 - Git
+- Supabase account (free tier)
 
 ### Installation
 
 1. **Clone the repository**
 ```bash
-   git clone https://github.com/yourusername/filmreviewer.git
-   cd filmreviewer
+git clone https://github.com/Ajinkyawagh4846/movie-reviewer.git
+cd movie-reviewer
 ```
 
-2. **Set up the backend**
+2. **Set up Supabase Database**
+   - Create account at [supabase.com](https://supabase.com)
+   - Create new project
+   - Go to SQL Editor and run:
+```sql
+   -- Create users table
+   CREATE TABLE users (
+       id SERIAL PRIMARY KEY,
+       username VARCHAR(255) UNIQUE NOT NULL,
+       email VARCHAR(255) UNIQUE NOT NULL,
+       password VARCHAR(255) NOT NULL,
+       created_at TIMESTAMP DEFAULT NOW(),
+       last_login TIMESTAMP
+   );
+   
+   -- Create search history table
+   CREATE TABLE search_history (
+       id SERIAL PRIMARY KEY,
+       user_id INTEGER NOT NULL,
+       movie_id VARCHAR(255) NOT NULL,
+       movie_title VARCHAR(255) NOT NULL,
+       searched_at TIMESTAMP DEFAULT NOW(),
+       FOREIGN KEY (user_id) REFERENCES users (id)
+   );
+   
+   -- Create user reviews table
+   CREATE TABLE user_reviews (
+       id SERIAL PRIMARY KEY,
+       user_id INTEGER NOT NULL,
+       movie_id VARCHAR(255) NOT NULL,
+       movie_title VARCHAR(255) NOT NULL,
+       rating INTEGER NOT NULL,
+       review_text TEXT NOT NULL,
+       created_at TIMESTAMP DEFAULT NOW(),
+       FOREIGN KEY (user_id) REFERENCES users (id)
+   );
+```
+   - Copy your Project URL and service_role key from Settings → API
+
+3. **Set up the backend**
 ```bash
-   cd backend
-   pip install -r requirements.txt
+cd backend
+pip install -r requirements.txt
 ```
 
-3. **Download NLTK data** (first time only)
+4. **Configure environment variables**
+   
+   Create `.env` file in backend folder:
+```
+   SUPABASE_URL=your_supabase_project_url
+   SUPABASE_KEY=your_supabase_service_role_key
+```
+
+5. **Download NLTK data** (first time only)
 ```python
-   python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt')"
+python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt')"
 ```
 
-4. **Train the ML model** (if not already trained)
+6. **Train the ML model** (if not already trained)
 ```bash
-   python sentiment_model.py
+python sentiment_model.py
 ```
 
-5. **Start the backend server**
+7. **Start the backend server**
 ```bash
-   python app.py
+python app.py
 ```
 
-6. **Open the frontend**
+8. **Open the frontend**
    - Navigate to `frontend/index.html` in your browser
    - Or use Live Server extension in VS Code
 
-7. **Access the application**
+9. **Access the application**
    - Frontend: `http://127.0.0.1:5500`
    - Backend API: `http://127.0.0.1:5000`
 
@@ -142,18 +196,19 @@
 
 ### For Users
 
-1. **Browse Movies** - Explore 1047+ movies with filters
+1. **Browse Movies** - Explore 1000+ movies with filters
 2. **Search** - Type movie name and get instant suggestions
 3. **Analyze** - Click on any movie to see sentiment analysis
 4. **Create Account** - Sign up to save search history
 5. **Submit Reviews** - Share your opinions with the community
+6. **View History** - Access your past searches anytime
 
 ### For Developers
 ```python
 # Example: Using the sentiment analysis API
 import requests
 
-response = requests.get('http://127.0.0.1:5000/api/analyze/tt1431045')
+response = requests.get('https://movie-review-fqp4.onrender.com/api/analyze/tt1431045')
 data = response.json()
 
 print(f"Movie: {data['movie']['title']}")
@@ -170,7 +225,7 @@ filmreviewer/
 ├── backend/
 │   ├── app.py                  # Main Flask application
 │   ├── sentiment_model.py      # ML model training & prediction
-│   ├── database.py             # Database operations
+│   ├── supabase_db.py         # Supabase database operations
 │   ├── tmdb_api.py            # TMDb API integration
 │   ├── requirements.txt        # Python dependencies
 │   └── cache/                  # API response cache
@@ -195,7 +250,6 @@ filmreviewer/
 ├── models/
 │   └── sentiment_model.pkl    # Trained ML model
 │
-├── users.db                   # SQLite database
 └── README.md                  # Project documentation
 ```
 
@@ -210,7 +264,7 @@ filmreviewer/
 - **Classes**: 3 (Negative, Neutral, Positive)
 - **Accuracy**: 75%
 
-### Data Preprocessing
+### Data Preprocessing Pipeline
 1. Text cleaning (lowercase, special character removal)
 2. Tokenization
 3. Stopword removal
@@ -227,7 +281,7 @@ filmreviewer/
 
 ### Base URL
 ```
-Production: https://filmreviewer-api.onrender.com
+Production: https://movie-review-fqp4.onrender.com
 Development: http://127.0.0.1:5000
 ```
 
@@ -237,17 +291,19 @@ Development: http://127.0.0.1:5000
 ```http
 GET /api/movies
 ```
-Returns list of all movies
+Returns list of all movies with metadata
 
 #### Search Movies
 ```http
 GET /api/search?q=Deadpool
 ```
+Search movies by title with autocomplete
 
-#### Analyze Movie
+#### Analyze Movie Sentiment
 ```http
 GET /api/analyze/{movie_id}
 ```
+Get detailed sentiment analysis for a specific movie
 
 #### User Registration
 ```http
@@ -272,29 +328,100 @@ Content-Type: application/json
 }
 ```
 
+#### Submit Review
+```http
+POST /api/submit-review
+Content-Type: application/json
+
+{
+  "movie_id": "tt1431045",
+  "movie_title": "Deadpool",
+  "rating": 9,
+  "review_text": "Amazing movie!"
+}
+```
+
+#### Get User Reviews
+```http
+GET /api/user-reviews/{movie_id}
+```
+
 ---
 
 ## 🌐 Deployment
 
-### Backend (Render)
-1. Push code to GitHub
-2. Create new Web Service on Render
-3. Connect GitHub repository
-4. Set environment variables
-5. Deploy
+### Architecture Overview
+```
+┌─────────────────┐
+│   Vercel        │
+│   (Frontend)    │
+└────────┬────────┘
+         │
+         ↓
+┌─────────────────┐      ┌──────────────┐
+│   Render        │ ───→ │  Supabase    │
+│   (Backend/ML)  │      │  (Database)  │
+└─────────────────┘      └──────────────┘
+```
 
-### Frontend (Vercel)
-1. Push code to GitHub
-2. Import project on Vercel
-3. Configure build settings
-4. Deploy
+### Backend Deployment (Render)
+
+1. **Prerequisites**
+   - GitHub account
+   - Render account
+   - Supabase project setup
+
+2. **Steps**
+   - Push code to GitHub
+   - Create new Web Service on Render
+   - Connect GitHub repository
+   - Set root directory to `backend`
+   - Add environment variables:
+     - `SUPABASE_URL`
+     - `SUPABASE_KEY`
+     - `RENDER=true`
+   - Deploy
+
+3. **Configuration**
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `gunicorn app:app`
+
+### Frontend Deployment (Vercel)
+
+1. **Steps**
+   - Push code to GitHub
+   - Import project on Vercel
+   - Set root directory to `frontend`
+   - Configure build settings
+   - Deploy
+
+2. **Environment**
+   - No build command needed (static files)
+   - Output directory: `.`
+
+### Database Setup (Supabase)
+
+1. **Create Project**
+   - Sign up at [supabase.com](https://supabase.com)
+   - Create new project
+   - Choose region closest to users
+
+2. **Run SQL Schema**
+   - Copy SQL from installation steps
+   - Run in SQL Editor
+   - Enable Row Level Security policies
+
+3. **Get Credentials**
+   - Project URL from Settings → API
+   - Service role key (keep secret!)
+   - Add to Render environment variables
 
 **Live URLs:**
-- Frontend: https://filmreviewer.vercel.app
-- Backend API: https://filmreviewer-api.onrender.com
+- Frontend: https://movie-review-smnz.vercel.app/
+- Backend API: https://movie-review-fqp4.onrender.com
+- Database: Supabase (managed PostgreSQL)
 
 ---
-
 
 ## 🤝 Contributing
 
@@ -314,10 +441,10 @@ Contributions are what make the open source community amazing! Any contributions
 
 - Email: ajinkyawagh2005@gmail.com
 - Phone: +91 8856875336
-- GitHub: https://github.com/Ajinkyawagh4846
-- LinkedIn: https://www.linkedin.com/in/ajinkya-wagh-a201212b8/
+- GitHub: [@Ajinkyawagh4846](https://github.com/Ajinkyawagh4846)
+- LinkedIn: [Ajinkya Wagh](https://www.linkedin.com/in/ajinkya-wagh-a201212b8/)
 
-**Project Link**: https://github.com/Ajinkyawagh4846/Movie-Review
+**Project Link**: [https://github.com/Ajinkyawagh4846/Movie-Review](https://github.com/Ajinkyawagh4846/Movie-Review)
 
 ---
 
@@ -331,6 +458,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 - [IMDb](https://www.imdb.com/) - Movie data source
 - [TMDb](https://www.themoviedb.org/) - Movie posters and trailers
+- [Supabase](https://supabase.com/) - PostgreSQL database and authentication
 - [Scikit-learn](https://scikit-learn.org/) - Machine learning library
 - [Flask](https://flask.palletsprojects.com/) - Web framework
 - [Vercel](https://vercel.com/) - Frontend hosting
@@ -343,5 +471,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 **Made with ❤️ by Ajinkya Wagh**
 
 ⭐ Star this repo if you find it helpful!
+
+![GitHub stars](https://img.shields.io/github/stars/Ajinkyawagh4846/Movie-Review?style=social)
+![GitHub forks](https://img.shields.io/github/forks/Ajinkyawagh4846/Movie-Review?style=social)
 
 </div>
